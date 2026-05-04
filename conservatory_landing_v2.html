@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>קונסרבטוריון דיגיטלי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600&family=Secular+One&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F9F7F4;
+  --white: #FFFFFF;
+  --ink: #2D2926;
+  --ink-soft: #6B6560;
+  --ink-faint: #A8A3A0;
+
+  --sage: #C8D8C8;
+  --sage-light: #E8F0E8;
+  --sage-deep: #7A9B7A;
+
+  --blush: #EDD9D0;
+  --blush-light: #F6EDEA;
+  --blush-deep: #C48B78;
+
+  --lavender: #D8D0E8;
+  --lavender-light: #EEEAF5;
+  --lavender-deep: #8B7AAA;
+
+  --sand: #EDE5D8;
+  --sand-light: #F7F3EE;
+
+  --r32: 32px;
+  --r24: 24px;
+  --r16: 16px;
+  --r8: 8px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Assistant', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  direction: rtl;
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  padding: 1rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(249,247,244,0.88);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(45,41,38,0.06);
+}
+
+.nav-logo {
+  font-family: 'Secular One', sans-serif;
+  font-size: 17px;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.nav-logo .dot { color: var(--sage-deep); }
+
+.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+.nav-links a {
+  font-size: 14px; font-weight: 400;
+  color: var(--ink-soft); text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--ink); }
+
+.nav-pill {
+  background: var(--ink);
+  color: white !important;
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 4rem;
+  padding: 8rem 2.5rem 5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--sage-light);
+  color: var(--sage-deep);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 1.75rem;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--sage-deep);
+}
+
+h1 {
+  font-family: 'Secular One', sans-serif;
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+
+.hero-highlight {
+  background: linear-gradient(135deg, var(--sage-deep), var(--lavender-deep));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-body {
+  font-size: 17px; font-weight: 300;
+  color: var(--ink-soft);
+  line-height: 1.75;
+  max-width: 440px;
+  margin-bottom: 2.25rem;
+}
+
+.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.btn-dark {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--ink); color: white;
+  padding: 13px 26px; border-radius: 100px;
+  font-size: 14px; font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.btn-dark:hover { opacity: 0.85; transform: translateY(-1px); }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: white; color: var(--ink);
+  padding: 13px 26px; border-radius: 100px;
+  font-size: 14px; font-weight: 500;
+  border: 1px solid rgba(45,41,38,0.15);
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-ghost:hover { background: var(--sand); transform: translateY(-1px); }
+
+/* ── HERO CARDS ── */
+.hero-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hero-card {
+  background: white;
+  border-radius: var(--r24);
+  padding: 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+  box-shadow: 0 2px 20px rgba(45,41,38,0.06);
+  transition: transform 0.3s;
+}
+.hero-card:hover { transform: translateX(-4px); }
+
+.hero-card:nth-child(2) { margin-right: 2rem; }
+
+.card-pip {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.pip-sage { background: var(--sage-light); }
+.pip-blush { background: var(--blush-light); }
+.pip-lavender { background: var(--lavender-light); }
+
+.card-text-main { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+.card-text-sub { font-size: 12px; color: var(--ink-faint); }
+
+.card-badge {
+  margin-right: auto;
+  padding: 4px 12px; border-radius: 100px;
+  font-size: 11px; font-weight: 600;
+}
+.badge-green { background: var(--sage-light); color: var(--sage-deep); }
+.badge-blush { background: var(--blush-light); color: var(--blush-deep); }
+.badge-lavender { background: var(--lavender-light); color: var(--lavender-deep); }
+
+/* ── SECTION WRAPPER ── */
+.section-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 2.5rem;
+}
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 5px 14px; border-radius: 100px;
+  margin-bottom: 1rem;
+}
+.ey-sage { background: var(--sage-light); color: var(--sage-deep); }
+.ey-blush { background: var(--blush-light); color: var(--blush-deep); }
+.ey-lavender { background: var(--lavender-light); color: var(--lavender-deep); }
+.ey-sand { background: var(--sand); color: var(--ink-soft); }
+
+h2 {
+  font-family: 'Secular One', sans-serif;
+  font-size: clamp(28px, 3.5vw, 42px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+.section-sub {
+  font-size: 16px; font-weight: 300;
+  color: var(--ink-soft); line-height: 1.7;
+  max-width: 500px;
+  margin-bottom: 3rem;
+}
+
+/* ── APPS ── */
+.apps-bg { background: white; }
+
+.apps-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.app-block {
+  border-radius: var(--r32);
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.app-block-sage { background: var(--sage-light); }
+.app-block-blush { background: var(--blush-light); }
+
+.app-block-num {
+  position: absolute; top: 2rem; left: 2rem;
+  font-family: 'Secular One', sans-serif;
+  font-size: 64px; line-height: 1;
+  opacity: 0.08; color: var(--ink);
+  pointer-events: none;
+}
+
+.app-icon {
+  width: 56px; height: 56px; border-radius: 18px;
+  background: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin-bottom: 1.5rem;
+  box-shadow: 0 2px 12px rgba(45,41,38,0.08);
+}
+
+h3 {
+  font-family: 'Secular One', sans-serif;
+  font-size: 24px; line-height: 1.25;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.01em;
+}
+
+.app-desc {
+  font-size: 14px; font-weight: 300;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 1.75rem;
+}
+
+.feat-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.feat-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: white;
+  border-radius: 100px;
+  padding: 7px 14px;
+  font-size: 13px; font-weight: 400;
+  color: var(--ink);
+  box-shadow: 0 1px 4px rgba(45,41,38,0.06);
+}
+
+.feat-pill::before {
+  content: '✓';
+  font-size: 10px; font-weight: 700;
+  color: var(--sage-deep);
+}
+.blush-pill::before { color: var(--blush-deep); }
+
+/* ── MANAGEMENT ── */
+.mgmt-bg { background: var(--sand-light); }
+
+.mgmt-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.mgmt-card {
+  background: white;
+  border-radius: var(--r24);
+  padding: 2rem;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.mgmt-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(45,41,38,0.08);
+}
+
+.mgmt-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 1.25rem;
+}
+.mi-sage { background: var(--sage-light); }
+.mi-lavender { background: var(--lavender-light); }
+.mi-blush { background: var(--blush-light); }
+
+h4 {
+  font-family: 'Secular One', sans-serif;
+  font-size: 17px; margin-bottom: 0.5rem;
+}
+
+.mgmt-card p {
+  font-size: 13px; font-weight: 300;
+  color: var(--ink-soft); line-height: 1.65;
+}
+
+/* ── DASHBOARD ── */
+.dash-bg { background: white; }
+
+.dash-wrap {
+  background: var(--bg);
+  border-radius: var(--r32);
+  overflow: hidden;
+  border: 1px solid rgba(45,41,38,0.07);
+}
+
+.dash-top {
+  background: var(--ink);
+  padding: 1.25rem 1.75rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.dash-name {
+  font-family: 'Secular One', sans-serif;
+  color: white; font-size: 16px;
+}
+
+.dash-meta-text { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+.dash-kpis {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: rgba(45,41,38,0.07);
+  border-bottom: 1px solid rgba(45,41,38,0.07);
+}
+
+.kpi {
+  background: white;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+}
+
+.kpi-n {
+  font-family: 'Secular One', sans-serif;
+  font-size: 36px; line-height: 1;
+  margin-bottom: 4px;
+}
+.kn-ink { color: var(--ink); }
+.kn-sage { color: var(--sage-deep); }
+.kn-blush { color: var(--blush-deep); }
+.kn-faint { color: var(--ink-faint); }
+
+.kpi-label { font-size: 12px; color: var(--ink-faint); font-weight: 400; }
+
+.dash-table-wrap { overflow-x: auto; }
+
+table {
+  width: 100%; border-collapse: collapse;
+}
+th {
+  text-align: right;
+  padding: 11px 16px;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  border-bottom: 1px solid rgba(45,41,38,0.07);
+  background: white;
+}
+td {
+  padding: 14px 16px;
+  font-size: 13px; font-weight: 400;
+  border-bottom: 1px solid rgba(45,41,38,0.05);
+  background: white;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg); }
+
+.sbadge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: 100px;
+  font-size: 11px; font-weight: 600;
+}
+.sb-g { background: var(--sage-light); color: var(--sage-deep); }
+.sb-b { background: var(--lavender-light); color: var(--lavender-deep); }
+.sb-o { background: var(--blush-light); color: var(--blush-deep); }
+
+.sdot { width: 5px; height: 5px; border-radius: 50%; }
+.sdot-g { background: var(--sage-deep); }
+.sdot-b { background: var(--lavender-deep); }
+.sdot-o { background: var(--blush-deep); }
+
+/* ── STEPS ── */
+.steps-bg { background: var(--lavender-light); }
+
+.steps-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.step-card {
+  background: white;
+  border-radius: var(--r24);
+  padding: 2rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.step-num-bg {
+  position: absolute; top: -10px; left: 10px;
+  font-family: 'Secular One', sans-serif;
+  font-size: 80px; line-height: 1;
+  color: var(--lavender);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.step-content { position: relative; z-index: 1; }
+
+.step-label {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--lavender-deep);
+  margin-bottom: 0.75rem;
+}
+
+h4.step-title {
+  font-family: 'Secular One', sans-serif;
+  font-size: 18px; margin-bottom: 0.5rem;
+}
+
+.step-body {
+  font-size: 13px; font-weight: 300;
+  color: var(--ink-soft); line-height: 1.6;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  padding: 2.5rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+
+.footer-logo {
+  font-family: 'Secular One', sans-serif;
+  font-size: 17px; color: white;
+}
+
+.footer-logo .dot { color: var(--sage-deep); }
+
+.footer-links { display: flex; gap: 2rem; list-style: none; }
+.footer-links a {
+  font-size: 13px; color: rgba(255,255,255,0.4);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: white; }
+
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-content > * { animation: fadeUp 0.6s ease both; }
+.hero-content > *:nth-child(1) { animation-delay: 0.05s; }
+.hero-content > *:nth-child(2) { animation-delay: 0.15s; }
+.hero-content > *:nth-child(3) { animation-delay: 0.25s; }
+.hero-content > *:nth-child(4) { animation-delay: 0.35s; }
+
+.hero-cards .hero-card:nth-child(1) { animation: fadeUp 0.6s 0.2s ease both; }
+.hero-cards .hero-card:nth-child(2) { animation: fadeUp 0.6s 0.35s ease both; }
+.hero-cards .hero-card:nth-child(3) { animation: fadeUp 0.6s 0.5s ease both; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 4rem; gap: 2.5rem; }
+  .section-wrap { padding: 4rem 1.5rem; }
+  .apps-layout { grid-template-columns: 1fr; }
+  .mgmt-cards { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dash-kpis { grid-template-columns: 1fr 1fr; }
+  footer { flex-direction: column; text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">קונסרבטוריון<span class="dot">•</span>דיגיטלי</a>
+  <ul class="nav-links">
+    <li><a href="#apps">אפליקציות</a></li>
+    <li><a href="#management">ניהול</a></li>
+    <li><a href="#dashboard">דשבורד</a></li>
+    <li><a href="#steps">תהליך</a></li>
+    <li><a href="#contact" class="nav-pill">צור קשר</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div style="max-width:1200px;margin:0 auto;">
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">מערכת ניהול לקונסרבטוריונים</div>
+    <h1>הקונסרבטוריון שלך,<br><span class="hero-highlight">חכם יותר.</span></h1>
+    <p class="hero-body">מרישום התלמיד ועד גאנט שנתי — כל מה שצריך לנהל בית ספר למוסיקה, במקום אחד ומחובר.</p>
+    <div class="hero-ctas">
+      <a href="#apps" class="btn-dark">גלה את הפתרון ←</a>
+      <a href="#dashboard" class="btn-ghost">ראה דמו</a>
+    </div>
+  </div>
+
+  <div class="hero-cards">
+    <div class="hero-card">
+      <div class="card-pip pip-sage">🎵</div>
+      <div>
+        <div class="card-text-main">רישום לקונסרבטוריון</div>
+        <div class="card-text-sub">שיבוץ אוטומטי · ניתוב לתשלום</div>
+      </div>
+      <div class="card-badge badge-green">פעיל</div>
+    </div>
+    <div class="hero-card">
+      <div class="card-pip pip-blush">📋</div>
+      <div>
+        <div class="card-text-main">ניהול נוכחות</div>
+        <div class="card-text-sub">גאנט שנתי · אישורי מחלה</div>
+      </div>
+      <div class="card-badge badge-blush">פעיל</div>
+    </div>
+    <div class="hero-card">
+      <div class="card-pip pip-lavender">📊</div>
+      <div>
+        <div class="card-text-main">דשבורד מזכירות</div>
+        <div class="card-text-sub">נרשם · שילם · בטיפול</div>
+      </div>
+      <div class="card-badge badge-lavender">חי</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- APPS -->
+<div class="apps-bg" id="apps">
+<div class="section-wrap">
+  <div class="eyebrow ey-sage">הפתרונות</div>
+  <h2>שתי אפליקציות. מערכת אחת.</h2>
+  <p class="section-sub">כל אפליקציה פותרת בעיה ספציפית — יחד הן מכסות את כל מחזור חיי התלמיד.</p>
+
+  <div class="apps-layout">
+    <div class="app-block app-block-sage">
+      <div class="app-block-num">01</div>
+      <div class="app-icon">🎵</div>
+      <h3>רישום לקונסרבטוריון</h3>
+      <p class="app-desc">הרשמה מונחית לפי מסלול — מתחילים, ממשיכים ומנגינות. התלמיד מודרך שלב אחר שלב, השיבוץ למורים אוטומטי.</p>
+      <div class="feat-pills">
+        <div class="feat-pill">ניתוב אוטומטי לתשלום</div>
+        <div class="feat-pill">שיבוץ חכם למורים</div>
+        <div class="feat-pill">4 מסלולי לימוד</div>
+        <div class="feat-pill">ידידותי להורים</div>
+      </div>
+    </div>
+
+    <div class="app-block app-block-blush">
+      <div class="app-block-num">02</div>
+      <div class="app-icon">📋</div>
+      <h3>ניהול נוכחות</h3>
+      <p class="app-desc">כל מורה מסמן נוכחות לתלמידים שלו. הגאנט השנתי מתעדכן בזמן אמת, בקשות מחלה עם מסמך מגיעות ישירות להנהלה.</p>
+      <div class="feat-pills">
+        <div class="feat-pill blush-pill">גאנט שנתי חי</div>
+        <div class="feat-pill blush-pill">הגיע / חסיר</div>
+        <div class="feat-pill blush-pill">בקשת מחלה + מסמך</div>
+        <div class="feat-pill blush-pill">תצוגת מורה / ניהול</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- MANAGEMENT -->
+<div class="mgmt-bg" id="management">
+<div class="section-wrap">
+  <div class="eyebrow ey-lavender">פאנל הניהול</div>
+  <h2>שליטה מלאה להנהלה</h2>
+  <p class="section-sub">כל מה שמנהל מוסד צריך לראות — מורים, נוכחות ואישורים — בזמן אמת.</p>
+
+  <div class="mgmt-cards">
+    <div class="mgmt-card">
+      <div class="mgmt-icon mi-sage">📊</div>
+      <h4>גאנט שנתי מלא</h4>
+      <p>תצוגה ויזואלית של כל שנת הלימודים. נוכחות, חסרות ואירועים לפי מורה ותאריך — הכל מתעדכן בזמן אמת.</p>
+    </div>
+    <div class="mgmt-card">
+      <div class="mgmt-icon mi-lavender">👩‍🏫</div>
+      <h4>מעקב אחר מורים</h4>
+      <p>מי מילא נוכחות ומי עוד לא. סקירת כל המורים, הכיתות שלהם, ימי עבודה ומצב הגאנט השוטף.</p>
+    </div>
+    <div class="mgmt-card">
+      <div class="mgmt-icon mi-blush">🏥</div>
+      <h4>אישורי מחלה</h4>
+      <p>בקשות מגיעות עם מסמך מצורף. ניתן לאשר, לדחות ולעקוב אחרי כל הבקשות מממשק אחד.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dash-bg" id="dashboard">
+<div class="section-wrap">
+  <div class="eyebrow ey-blush">דשבורד מזכירות</div>
+  <h2>סטטוס כל תלמיד — במבט אחד</h2>
+  <p class="section-sub">המזכירות רואה בדיוק איפה כל תלמיד נמצא בתהליך.</p>
+
+  <div class="dash-wrap">
+    <div class="dash-top">
+      <div class="dash-name">דשבורד רישומים — תשפ"ה</div>
+      <div class="dash-meta-text">עודכן היום, 09:41</div>
+    </div>
+
+    <div class="dash-kpis">
+      <div class="kpi">
+        <div class="kpi-n kn-ink">47</div>
+        <div class="kpi-label">סה״כ רישומים</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-n kn-sage">31</div>
+        <div class="kpi-label">שילמו ✓</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-n kn-blush">12</div>
+        <div class="kpi-label">בטיפול</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-n kn-faint">4</div>
+        <div class="kpi-label">נרשמו בלבד</div>
+      </div>
+    </div>
+
+    <div class="dash-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>שם תלמיד</th>
+            <th>כלי</th>
+            <th>מסלול</th>
+            <th>מורה</th>
+            <th>יום ושעה</th>
+            <th>סטטוס</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>נועה כהן</strong></td>
+            <td>כינור</td>
+            <td>ממשיכה</td>
+            <td>מירב לוי</td>
+            <td>ד׳ 16:00</td>
+            <td><span class="sbadge sb-g"><span class="sdot sdot-g"></span>שילם</span></td>
+          </tr>
+          <tr>
+            <td><strong>אריאל בן-דוד</strong></td>
+            <td>גיטרה</td>
+            <td>מתחיל</td>
+            <td>עמי שרון</td>
+            <td>ג׳ 15:00</td>
+            <td><span class="sbadge sb-b"><span class="sdot sdot-b"></span>נרשם</span></td>
+          </tr>
+          <tr>
+            <td><strong>מיה ראובן</strong></td>
+            <td>פסנתר</td>
+            <td>מנגינות</td>
+            <td>דנה כץ</td>
+            <td>א׳ 14:00</td>
+            <td><span class="sbadge sb-o"><span class="sdot sdot-o"></span>בטיפול</span></td>
+          </tr>
+          <tr>
+            <td><strong>תום אלוני</strong></td>
+            <td>חליל</td>
+            <td>ממשיך</td>
+            <td>רוני מזרחי</td>
+            <td>ב׳ 13:30</td>
+            <td><span class="sbadge sb-g"><span class="sdot sdot-g"></span>שילם</span></td>
+          </tr>
+          <tr>
+            <td><strong>שירה גולן</strong></td>
+            <td>פסנתר</td>
+            <td>מתחילה</td>
+            <td>דנה כץ</td>
+            <td>ה׳ 15:30</td>
+            <td><span class="sbadge sb-o"><span class="sdot sdot-o"></span>בטיפול</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- STEPS -->
+<div class="steps-bg" id="steps">
+<div class="section-wrap">
+  <div class="eyebrow ey-sand">תהליך</div>
+  <h2>איך זה עובד</h2>
+  <p class="section-sub">מרגע שהורה פותח את הטופס ועד שהתלמיד יושב בשיעור.</p>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num-bg">1</div>
+      <div class="step-content">
+        <div class="step-label">שלב 01</div>
+        <h4 class="step-title">הורה נרשם</h4>
+        <p class="step-body">ממלא טופס לפי מסלול — מתחיל, ממשיך או מנגינות. מובן ומהיר.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num-bg">2</div>
+      <div class="step-content">
+        <div class="step-label">שלב 02</div>
+        <h4 class="step-title">שיבוץ אוטומטי</h4>
+        <p class="step-body">המערכת משבצת למורה המתאים לפי ימים ושעות פנויות שהוגדרו מראש.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num-bg">3</div>
+      <div class="step-content">
+        <div class="step-label">שלב 03</div>
+        <h4 class="step-title">תשלום ואישור</h4>
+        <p class="step-body">ניתוב לתשלום, המזכירות מעדכנת סטטוס — נרשם, שילם, בטיפול.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num-bg">4</div>
+      <div class="step-content">
+        <div class="step-label">שלב 04</div>
+        <h4 class="step-title">שנת לימודים</h4>
+        <p class="step-body">המורה מסמן נוכחות. ההנהלה עוקבת בגאנט שנתי חי ומאשרת מחלות.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-logo">קונסרבטוריון<span class="dot">•</span>דיגיטלי</div>
+  <ul class="footer-links">
+    <li><a href="#apps">אפליקציות</a></li>
+    <li><a href="#management">ניהול</a></li>
+    <li><a href="#steps">תהליך</a></li>
+    <li><a href="mailto:info@example.com">צור קשר</a></li>
+  </ul>
+  <div class="footer-copy">Next.js · Supabase · Vercel</div>
+</footer>
+
+</body>
+</html>
